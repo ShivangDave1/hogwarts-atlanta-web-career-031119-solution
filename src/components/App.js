@@ -17,7 +17,7 @@ class App extends Component {
     this.state = {
       hogs: hogs,
       greasedOnly: false,
-      sort: "name"
+      sort: "none"
     }
   }
 
@@ -25,15 +25,19 @@ class App extends Component {
   //FILTER HOGS GREASED OR NOT
   filteredHogs = () => {
     if(this.state.greasedOnly){
-      return this.state.hogs.filter((hog)=> hog.greased)
+      const hogs = [...this.state.hogs]
+      return hogs.filter((hog)=> hog.greased)
     }else{
-      return this.state.hogs
+      return [...this.state.hogs]
     }
   }
 
   //SORT BY NAME OR WEIGHT
   sortedHogs = (hogs) => {
-    if(this.state.sort==="name"){
+    if(this.state.sort==="none"){
+      return [...this.state.hogs]
+    }
+    else if(this.state.sort==="name"){
       return hogs.sort((a, b) => {
         var nameA = a.name.toUpperCase();
         var nameB = b.name.toUpperCase();
@@ -71,9 +75,9 @@ class App extends Component {
 
   render() {
 
-    //CONSOLE LOG 
+    //CONSOLE LOG
     // console.log('sort:',this.state.sort)
-  
+
     return (
 
       // {/* PASSING STATES TO FILTER & HOG CONTAINER COMPONENT */}
@@ -81,7 +85,7 @@ class App extends Component {
       <div className="App">
           <Nav />
 
-          <Filter 
+          <Filter
             greasedOnly={this.state.greasedOnly}
             handleCheck={this.handleCheck}
 
